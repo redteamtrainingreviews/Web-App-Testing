@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Outer Overlay Lab</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
+
+    .panel h1 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: 1px solid #94a3b8;
+      border-radius: 8px;
+      background: #e2e8f0;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #cbd5e1;
+    }
+
+    .readout {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      font-family: Consolas, monospace;
+    }
+
+    .viewport {
+      position: relative;
+      width: 900px;
+      height: 620px;
+      border: 2px solid #64748b;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #ddd;
+    }
+
+    iframe {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 900px;
+      height: 620px;
+      border: none;
+      z-index: 1;
+      background: white;
+    }
+
+    .overlay-box {
+      position: absolute;
+      left: 350px;
+      top: 210px;
+      width: 120px;
+      height: 80px;
+      background: rgba(239, 68, 68, 0.70);
+      border: 3px solid #7f1d1d;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      z-index: 5;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .tip {
+      margin-top: 16px;
+      font-size: 15px;
+      color: #475569;
+    }
+
+    code {
+      background: #eef2ff;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="panel">
+      <h1>Outer Page</h1>
+      <p>
+        This is a harmless positioning lab. The iframe loads your other local page.
+        The red block is on top of the iframe and can be moved around to learn layering.
+      </p>
+
+      <div class="controls">
+        <button onclick="moveBox(0, -10)">Up</button>
+        <button onclick="moveBox(0, 10)">Down</button>
+        <button onclick="moveBox(-10, 0)">Left</button>
+        <button onclick="moveBox(10, 0)">Right</button>
+
+        <button onclick="resizeBox(10, 0)">Wider</button>
+        <button onclick="resizeBox(-10, 0)">Narrower</button>
+        <button onclick="resizeBox(0, 10)">Taller</button>
+        <button onclick="resizeBox(0, -10)">Shorter</button>
+
+        <button onclick="changeOpacity(0.1)">More Solid</button>
+        <button onclick="changeOpacity(-0.1)">More Transparent</button>
+
+        <button onclick="resetBox()">Reset</button>
+      </div>
+
+      <div class="readout" id="readout"></div>
+
+      <p class="tip">
+        You can also edit the CSS directly in the file:
+        <code>left</code>, <code>top</code>, <code>width</code>, <code>height</code>, and <code>z-index</code>.
+      </p>
+    </div>
+
+    <div class="viewport">
+      <iframe src="http://127.0.0.1:8080/inner.html"></iframe>
+      <div class="overlay-box" id="box">Overlay Box</div>
+    </div>
+  </div>
+
+  <script>
+    const box = document.getElementById('box');
+    const readout = document.getElementById('readout');
+
+    let state = {
+      x: 350,
+      y: 210,
+      w: 120,
+      h: 80,
+      alpha: 0.70
+    };
+
+    function render() {
+      box.style.left = state.x + 'px';
+      box.style.top = state.y + 'px';
+      box.style.width = state.w + 'px';
+      box.style.height = state.h + 'px';
+      box.style.background = `rgba(239, 68, 68, ${state.alpha})`;
+
+      readout.textContent =
+        `left=${state.x}px | top=${state.y}px | width=${state.w}px | height=${state.h}px | alpha=${state.alpha.toFixed(2)}`;
+    }
+
+    function moveBox(dx, dy) {
+      state.x += dx;
+      state.y += dy;
+      render();
+    }
+
+    function resizeBox(dw, dh) {
+      state.w = Math.max(20, state.w + dw);
+      state.h = Math.max(20, state.h + dh);
+      render();
+    }
+
+    function changeOpacity(delta) {
+      state.alpha = Math.max(0.10, Math.min(1.00, state.alpha + delta));
+      render();
+    }
+
+    function resetBox() {
+      state = {
+        x: 350,
+        y: 210,
+        w: 120,
+        h: 80,
+        alpha: 0.70
+      };
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>
