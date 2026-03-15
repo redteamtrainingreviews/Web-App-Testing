@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inner Page</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #e5e7eb;
+    }
+
+    .frame-page {
+      width: 100%;
+      min-height: 100vh;
+      padding: 24px;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .title {
+      margin-bottom: 20px;
+      padding: 16px;
+      background: white;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .stage {
+      position: relative;
+      width: 700px;
+      height: 420px;
+      background: white;
+      border: 2px solid #94a3b8;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .target {
+      position: absolute;
+      width: 120px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      font-weight: bold;
+      border: 2px solid rgba(0,0,0,0.15);
+    }
+
+    .a { left: 60px; top: 70px; background: #93c5fd; }
+    .b { left: 280px; top: 140px; background: #86efac; }
+    .c { left: 500px; top: 250px; background: #fde68a; }
+
+    .note {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      color: #334155;
+    }
+  </style>
+</head>
+<body>
+  <div class="frame-page">
+    <div class="title">Inner Page Inside the iframe</div>
+
+    <div class="stage">
+      <div class="target a">Target A</div>
+      <div class="target b">Target B</div>
+      <div class="target c">Target C</div>
+
+      <div class="note">
+        Try lining your outer-page overlay block up with Target B first.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
